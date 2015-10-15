@@ -43,7 +43,9 @@ class dns::server::default (
     mode    => '0644',
     content => template("${module_name}/${default_template}"),
     notify  => Class['dns::server::service'],
-    require => Package[$::dns::server::params::necessary_packages]
+
+    # Make sure the packages are installed, so that the owner / group are available
+    require => Package[$dns::server::params::necessary_packages],
   }
 
 }
